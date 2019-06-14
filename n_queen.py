@@ -117,10 +117,15 @@ def viavel(tab,linha,col):
 
 
 def backtracking(tab, col, n):
-
+    
+    global quant_sol
+    
     if( col == n):
+        
+        quant_sol += 1
+
+        print("Solução %d:"%quant_sol)
         print_solution(tab,n)
-        print("AEEE")
         return
 
     else:
@@ -137,11 +142,22 @@ def backtracking(tab, col, n):
         return False
 
 
-tab = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+
+quant_sol = 0 # conta a quantidade de soluções
+    
+tab = [[0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0]]
+
 
 for i in range(len(tab)):
     print(tab[i],end="\n")
 
 print("############### RESULTADO ##########################")
 
-backtracking(tab, 0, 4)
+backtracking(tab, 0, len(tab))
