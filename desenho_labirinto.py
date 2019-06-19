@@ -10,6 +10,7 @@ class Grafo():
         self.arestas     = [] #lista contendo as arestas  do grafo
         self.descoberto  = [] #lista de vertices descobertos
         self.adjacencias = [] #lista de  adjacentes
+
 # Busca em profundidade
 
 def DFS_visit(grafo, vertice):
@@ -20,15 +21,10 @@ def DFS_visit(grafo, vertice):
     if (vertice_inicio != vertice):
         contagem += 1
 
-    grafo.descoberto[vertice] = 1
+    grafo.descoberto[vertice] = 1  # quando o vertice é descoberto ele adiciona 1 a lista de descobertos.
     for i in grafo.adjacencias[vertice]:
         if (grafo.descoberto[i] == 0):
             DFS_visit(grafo,i)
-            grafo.pai[i] = vertice
-
-
-    #tempo += 1
-    #grafo.salto[vertice] =
 
 def DFS(grafo):
 
@@ -43,7 +39,7 @@ def prepara_proxima_entrada(grafo):
     grafo.vertices   = []  # limpa lista contendo os vertices do grafo
     grafo.arestas    = []  # limpa lista contendo as arestas  do grafo
     grafo.descoberto = []  # limpa lista de vertices descobertos
-    grafo.adjacencias= []  # limpa lista de adjacencias
+    grafo.adjacencias= []  # limpa lista de vertices descobertos
 
 grafo = Grafo()
 check = 0
@@ -74,77 +70,77 @@ while (check != casos_teste):
 
             vertice_inicio = int(N[0])
 
-        while(1):
+            while(1):
 
-            # 3º linha de entrada: Numero de vertices e arestas
+                # 3º linha de entrada: Numero de vertices e arestas
 
-            V_A = input().strip()
-            V_A = V_A.split()
+                V_A = input().strip()
+                V_A = V_A.split()
 
-            if(V_A):
+                if(V_A):
 
-                quant_vertices = int(V_A[0])
-                quant_arestas = int(V_A[1])
-                break
+                    quant_vertices = int(V_A[0])
+                    quant_arestas = int(V_A[1])
+                    break
 
-        for i in range(quant_vertices): # adicionando os vertices da instância Grafo criada.
-            grafo.vertices.append(i)
-            grafo.descoberto.append(0)  # alocando indices para inserir os vertices descobertos.
-            grafo.adjacencias.append([])# alocando nossa lista de adjacencia para colocar os vertices vizinhos conforme indice.
+            for i in range(quant_vertices): # adicionando os vertices da instância Grafo criada.
+                grafo.vertices.append(i)
+                grafo.descoberto.append(0)  # alocando indices para inserir os vertices descobertos.
+                grafo.adjacencias.append([])# alocando nossa lista de adjacencia para colocar os vertices vizinhos conforme indice.
 
-        for i in range(quant_arestas): # criando a matriz para inserir as arestas.
-            grafo.arestas.append([])
+            for i in range(quant_arestas): # criando a matriz para inserir as arestas.
+                grafo.arestas.append([])
 
-        cont = 0
-        while (cont <  quant_arestas):
+            cont = 0
+            while (cont <  quant_arestas):
 
-            # 4º linha de entrada: Quantidade de arestas do nosso grafo
-            aresta = []
+                # 4º linha de entrada: Quantidade de arestas do nosso grafo
+                aresta = []
 
-            A = input().strip()
-            A = A.split()
+                A = input().strip()
+                A = A.split()
 
-            if (A):
+                if (A):
 
-                for i in range(2):  # Estou recebendo da entrada as arestas e colocando na lista de aresta do Grafo criado.
-                    aresta.append(int(A[i]))
-                    grafo.arestas[cont].append(aresta[i])
+                    for i in range(2):  # Estou recebendo da entrada as arestas e colocando na lista de aresta do Grafo criado.
+                        aresta.append(int(A[i]))
+                        grafo.arestas[cont].append(aresta[i])
 
-                cont += 1
-
-
-        # Alocar a lista de adjacencia ....
-
-        for i in range(quant_arestas):
-
-            if ( grafo.arestas[i][0] in grafo.adjacencias[grafo.arestas[i][1]]):
-                pass
-            else:
-                grafo.adjacencias[grafo.arestas[i][1]].append(grafo.arestas[i][0])
-
-            if ( grafo.arestas[i][1] in grafo.adjacencias[grafo.arestas[i][0]]):
-                pass
-            else:
-                grafo.adjacencias[grafo.arestas[i][0]].append(grafo.arestas[i][1])
+                    cont += 1
 
 
-        # podem existir nós desconexos no grafo tempo que marcalos pois eles não seram alcançados pela busca em profundidade.
+            # Alocar a lista de adjacencia ....
 
-        for i in range(quant_vertices):
+            for i in range(quant_arestas):
 
-            if ( len(grafo.adjacencias[i]) == 0):
-                grafo.descoberto[i] = "None"
+                if ( grafo.arestas[i][0] in grafo.adjacencias[grafo.arestas[i][1]]):
+                    pass
+                else:
+                    grafo.adjacencias[grafo.arestas[i][1]].append(grafo.arestas[i][0])
 
-        #chamando a busca em pronfundidade
+                if ( grafo.arestas[i][1] in grafo.adjacencias[grafo.arestas[i][0]]):
+                    pass
+                else:
+                    grafo.adjacencias[grafo.arestas[i][0]].append(grafo.arestas[i][1])
 
-        DFS(grafo)
-        list_temp.append(contagem*2) # multiplico por dois pois em um grafo conexo se você quer partir de um ponto visitar todos os vertices e voltar para esse mesmo ponto o tamanho do caminho percorrido é igual a quantidade de vertices visitados vezes 2.
 
-        #print(grafo.descoberto) para vizualizar os nós que foram descobertos. Nós desconexos não são visitados.
+            # podem existir nós desconexos no grafo tempo que marcalos pois eles não seram alcançados pela busca em profundidade.
 
-        prepara_proxima_entrada(grafo)
+            for i in range(quant_vertices):
 
-        check += 1
+                if ( len(grafo.adjacencias[i]) == 0):
+                    grafo.descoberto[i] = "None"
+
+            #chamando a busca em pronfundidade
+
+            DFS(grafo)
+            list_temp.append(contagem*2) # multiplico por dois pois em um grafo conexo se você quer partir de um ponto visitar todos os vertices e voltar para esse mesmo ponto o tamanho do caminho percorrido é igual a quantidade de vertices visitados vezes 2.
+
+            #print(grafo.descoberto) para vizualizar os nós que foram descobertos. Nós desconexos não são visitados.
+
+            prepara_proxima_entrada(grafo)
+
+            check += 1
 
 for i in range(len(list_temp)):
     print(list_temp[i])
