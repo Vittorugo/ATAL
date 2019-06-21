@@ -80,22 +80,32 @@ while ( check != casos_teste):
 
     if (N):
 
-        pontos_principais = int(N[0])
+        if (len(N) == 2):
 
-        num_estradas_prometidas = pontos_principais - 1 # o número de estradas para interligar todos os pontos sempre será o número de pontos principais menos um.
+            pontos_principais = int(N[0])
+            num_estradas = int(N[1])
+
+            num_estradas_prometidas = pontos_principais - 1 # o número de estradas para interligar todos os pontos sempre será o número de pontos principais menos um.
 
 
-        # 3º linha de entrada : Número de estradas construídas.
+        else:
 
-        while (1):
+            pontos_principais = int(N[0])
 
-            M = input().strip()
-            M = M.split()
+            num_estradas_prometidas = pontos_principais - 1 # o número de estradas para interligar todos os pontos sempre será o número de pontos principais menos um.
 
-            if (M):
 
-                num_estradas = int(M[0])
-                break
+            # 3º linha de entrada : Número de estradas construídas.
+
+            while (1):
+
+                M = input().strip()
+                M = M.split()
+
+                if (M):
+
+                    num_estradas = int(M[0])
+                    break
 
         ####################################   Inicializando Grafo   ##############################################
 
@@ -125,7 +135,7 @@ while ( check != casos_teste):
 
         #############################################################################################################
 
-
+        # 4º Entrada = Receber arestas .
 
         cont = 0
 
@@ -181,9 +191,10 @@ while ( check != casos_teste):
         total = num_estradas_prometidas - soma_pais
         list_temp.append(total)   # armazenando total de estradas que falta para cumprir promessa
 
-        prepara_proxima_entrada(grafo) #limpa grafo.
+        prepara_proxima_entrada(grafo)
 
         check += 1
+
 
 
 for i in range(len(list_temp)):
