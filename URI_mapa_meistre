@@ -1,0 +1,165 @@
+
+""" Mapa do Meistre """
+
+
+def print_solution(mapa, x, y):
+
+    global check_ciclo
+
+    if mapa[x][y] == "*":
+
+        print("*")
+
+    else:
+
+        print("!")
+
+
+def backtracking(mapa, x, y, altura, largura, dir):
+    if (x < altura and y < largura and mapa[x][y] == "*"):
+
+        print_solution(mapa, x, y)
+        return
+
+    else:
+
+        if ((-1 < x < altura) and (-1 < y < largura)):
+
+            if (mapa[x][y] == "."):
+
+                if dir == ">":
+
+                    mapa[x][y] = "x"
+                    backtracking(mapa, x, y + 1, altura, largura, dir)
+
+                elif dir == "<":
+
+                    mapa[x][y] = "x"
+                    backtracking(mapa, x, y - 1, altura, largura, dir)
+
+                elif dir == "^":
+
+                    mapa[x][y] = "x"
+                    backtracking(mapa, x - 1, y, altura, largura, dir)
+
+                elif dir == "v":
+
+                    mapa[x][y] = "x"
+                    backtracking(mapa, x + 1, y, altura, largura, dir)
+
+
+            elif mapa[x][y] == ">":
+
+                dir = ">"
+                mapa[x][y] = "x"
+                backtracking(mapa, x, y + 1, altura, largura, dir)
+
+
+
+            elif mapa[x][y] == "<":
+
+                dir = "<"
+                mapa[x][y] = "x"
+                backtracking(mapa, x, y - 1, altura, largura, dir)
+
+            elif mapa[x][y] == "v":
+
+                dir = "v"
+                mapa[x][y] = "x"
+                backtracking(mapa, x + 1, y, altura, largura, dir)
+
+
+            elif mapa[x][y] == "^":
+
+                dir = "^"
+                mapa[x][y] = "x"
+                backtracking(mapa, x - 1, y, altura, largura, dir)
+
+            else:
+
+                global check_ciclo
+
+                check_ciclo += 1
+
+                if ( check_ciclo > 1):
+                    print_solution(mapa, x, y)
+
+                else:
+                    mapa[x][y] = "."
+                    backtracking(mapa,x,y,altura,largura,dir)
+
+        else:
+            print("!")
+
+
+
+while True:
+
+    num_colunas = input().strip()
+    num_colunas = num_colunas.split()
+
+    if (num_colunas):
+
+        if (len(num_colunas) == 2):
+
+            largura = int(num_colunas[0])
+            altura = int(num_colunas[1])
+            break
+        else:
+
+            largura = int(num_colunas[0])
+
+            while True:
+
+                num_linhas = input().strip()
+                num_linhas = num_linhas.split()
+
+                if (num_linhas):
+                    altura = int(num_linhas[0])
+                    break
+
+            break
+
+check_ciclo =0
+cont = 0
+mapa = []
+
+while (cont < altura):
+
+    tab_temp = []
+
+    tab = input().strip()
+    #tab = tab.split()
+
+    if tab:
+
+        for i in range(len(tab)):
+            tab_temp.append(tab[i])
+
+        mapa.append(tab_temp)
+        cont += 1
+
+backtracking(mapa, 0, 0, altura, largura, mapa[0][0])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
