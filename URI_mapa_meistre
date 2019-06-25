@@ -1,97 +1,96 @@
 
+
 """ Mapa do Meistre """
 
 
-def print_solution(mapa, x, y):
+def procura_bau(mapa, x, y, altura, largura, dir):
 
-    global check_ciclo
+    global  encontrou_bau
 
-    if mapa[x][y] == "*":
+    while ((-1 < x < altura) and (-1 < y < largura)):
 
-        print("*")
+        i = 0
+        j = 0
 
-    else:
+        if (mapa[x][y] == "."):
 
-        print("!")
+            if dir == ">":
 
-
-def backtracking(mapa, x, y, altura, largura, dir):
-    if (x < altura and y < largura and mapa[x][y] == "*"):
-
-        print_solution(mapa, x, y)
-        return
-
-    else:
-
-        if ((-1 < x < altura) and (-1 < y < largura)):
-
-            if (mapa[x][y] == "."):
-
-                if dir == ">":
-
-                    mapa[x][y] = "x"
-                    backtracking(mapa, x, y + 1, altura, largura, dir)
-
-                elif dir == "<":
-
-                    mapa[x][y] = "x"
-                    backtracking(mapa, x, y - 1, altura, largura, dir)
-
-                elif dir == "^":
-
-                    mapa[x][y] = "x"
-                    backtracking(mapa, x - 1, y, altura, largura, dir)
-
-                elif dir == "v":
-
-                    mapa[x][y] = "x"
-                    backtracking(mapa, x + 1, y, altura, largura, dir)
-
-
-            elif mapa[x][y] == ">":
-
-                dir = ">"
                 mapa[x][y] = "x"
-                backtracking(mapa, x, y + 1, altura, largura, dir)
+                i  = 0
+                j  = 1
 
+            elif dir == "<":
 
-
-            elif mapa[x][y] == "<":
-
-                dir = "<"
                 mapa[x][y] = "x"
-                backtracking(mapa, x, y - 1, altura, largura, dir)
+                i  = 0
+                j  = -1
 
-            elif mapa[x][y] == "v":
 
-                dir = "v"
+            elif dir == "^":
+
                 mapa[x][y] = "x"
-                backtracking(mapa, x + 1, y, altura, largura, dir)
+                i  = -1
+                j  = 0
 
+            elif dir == "v":
 
-            elif mapa[x][y] == "^":
-
-                dir = "^"
                 mapa[x][y] = "x"
-                backtracking(mapa, x - 1, y, altura, largura, dir)
+                i  = 1
+                j  = 0
 
-            else:
 
-                global check_ciclo
+        elif mapa[x][y] == ">":
 
-                check_ciclo += 1
+            dir = ">"
+            mapa[x][y] = "x"
+            i = 0
+            j = 1
 
-                if ( check_ciclo > 1):
-                    print_solution(mapa, x, y)
+        elif mapa[x][y] == "<":
 
-                else:
-                    mapa[x][y] = "."
-                    backtracking(mapa,x,y,altura,largura,dir)
+            dir = "<"
+            mapa[x][y] = "x"
+            i = 0
+            j = -1
+
+        elif mapa[x][y] == "v":
+
+            dir = "v"
+            mapa[x][y] = "x"
+            i = 1
+            j = 0
+
+        elif mapa[x][y] == "^":
+
+            dir = "^"
+            mapa[x][y] = "x"
+            i = -1
+            j = 0
+
+
+        elif mapa[x][y] == "*":
+
+            encontrou_bau = True
+            return encontrou_bau
 
         else:
-            print("!")
 
+            global check_ciclo
 
+            check_ciclo += 1
+
+            if ( check_ciclo > 50):
+                return encontrou_bau
+
+            else:
+                mapa[x][y] = "."
+
+        x += i
+        y += j
+
+    else:
+        return encontrou_bau
 
 while True:
 
@@ -104,25 +103,36 @@ while True:
 
             largura = int(num_colunas[0])
             altura = int(num_colunas[1])
-            break
+
+            if (largura < 100 and altura < 100):
+
+                break
+
         else:
 
             largura = int(num_colunas[0])
 
-            while True:
+            if (largura < 100):
 
-                num_linhas = input().strip()
-                num_linhas = num_linhas.split()
+                while True:
 
-                if (num_linhas):
-                    altura = int(num_linhas[0])
-                    break
+                    num_linhas = input().strip()
+                    num_linhas = num_linhas.split()
 
-            break
+                    if (num_linhas):
+                        altura = int(num_linhas[0])
+
+                        if (altura < 100):
+
+                            break
+
+                break
 
 check_ciclo =0
 cont = 0
 mapa = []
+encontrou_bau = False
+
 
 while (cont < altura):
 
@@ -139,8 +149,10 @@ while (cont < altura):
         mapa.append(tab_temp)
         cont += 1
 
-backtracking(mapa, 0, 0, altura, largura, mapa[0][0])
+procura_bau(mapa, 0, 0, altura, largura, mapa[0][0])
 
+if(encontrou_bau): print("*")
+else: print("!")
 
 
 
